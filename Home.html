@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrainBox Dashboard</title>
+  <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: linear-gradient(to bottom, #463d84 40%, #1f1b3d 100%);
+  }
+  
+  /* LOGIN PAGE */
+  .centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #463d84 40%, #1f1b3d 100%);
+  }
+
+  .login-box {
+    background: url("img/1.jpeg") no-repeat center center/cover;
+    padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    width: 600px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .login-box h2 {
+    margin-bottom: 25px;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .login-box label {
+    display: block;
+    text-align: left;
+    margin: 8px 50px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .login-box input {
+    width: 80%;
+    padding: 14px;
+    margin: 10px 0 18px 0;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+
+  .login-box .forgot {
+    font-size: 14px;
+    text-align: left;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    margin-left: 50px;
+    color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  .login-box button {
+    padding: 14px 35px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  /* DASHBOARD PAGE */
+  .dashboard {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+    background: url("img/bg.jpg") no-repeat center center/cover;
+  }
+
+  .dashboard h2 {
+    color: #fff;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tab {
+    background: rgba(91, 82, 150, 0.85);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .tab.active {
+    background: rgba(136, 129, 193, 0.9);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: start;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .vpn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .tabs {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div class="centered" id="login-page">
+    <div class="login-box">
+      <h2>Welcome to BrainBox</h2>
+      <form id="login-form">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <div class="forgot">Forgot Password</div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <h2>Tools</h2>
+    <div class="tabs">
+      <div class="tab active" data-tab="network">Network Dashboard</div>
+      <div class="tab" data-tab="vpn">VPN Dashboard</div>
+      <div class="tab" data-tab="bandwidth">Bandwidth Dashboard</div>
+    </div>
+
+    <!-- Network Dashboard -->
+    <div class="tab-content active" id="network">
+      <div class="grid">
+        <div class="card" id="best-availability">Best Availability (Highest Uptime)</div>
+        <div class="card" id="worst-availability">Worst Availability (Highest Downtime)</div>
+        <div class="card" id="fastest-ping">Fastest Ping</div>
+        <div class="card" id="slowest-ping">Slowest Ping</div>
+        <div class="card" id="lowest-bandwidth">Lowest Bandwidth Usage</div>
+        <div class="card" id="highest-bandwidth">Highest Bandwidth Usage</div>
+        <div class="card" id="most-disk">Most Available Disk Space</div>
+        <div class="card" id="least-disk">Least Available Disk Space</div>
+      </div>
+    </div>
+
+    <!-- VPN Dashboard -->
+    <div class="tab-content" id="vpn">
+      <div class="card">Connected SSL Clients: 0</div>
+      <div class="card">IPSec Tunnels Up: 1</div>
+      <div class="card">IPSec Tunnels Down: 0</div>
+    </div>
+
+    <!-- Bandwidth Dashboard -->
+    <div class="tab-content" id="bandwidth">
+      <div class="card">Sensor 1 - Status: OK - 0.09 Mb/s</div>
+      <div class="card">Sensor 2 - Status: OK - 0.09 Mb/s</div>
+      <div class="card">Sensor 3 - Status: OK - 0.09 Mb/s</div>
+    </div>
+  </div>
+
+<script>
+  // ================= ZABBIX API CONFIG =================
+  const ZABBIX_URL = "http://localhost:8080/api_jsonrpc.php";
+  const ZABBIX_USER = "Admin";      // exact Zabbix UI username
+  const ZABBIX_PASS = "zabbix";     // exact Zabbix UI password
+
+  // ---------------- Simple local login ----------------
+  const loginForm  = document.getElementById("login-form");
+  const loginPage  = document.getElementById("login-page");
+  const dashboard  = document.getElementById("dashboard");
+
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (username === "Admin" && password === "zabbix") {
+      loginPage.style.display = "none";
+      dashboard.style.display = "block";
+      loadZabbixData(); // Fetch Zabbix data after login
+    } else {
+      alert("Invalid username or password. Try again!");
+    }
+  });
+
+  // ---------------- Tab switching ----------------
+  const tabs        = document.querySelectorAll(".tab");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      tabContents.forEach(content => {
+        content.classList.toggle("active", content.id === tab.dataset.tab);
+      });
+    });
+  });
+
+  // ---------------- Zabbix API helper ----------------
+  async function zabbixApi(method, params, auth) {
+    // Build request object and add auth only if provided
+    const body = {
+      jsonrpc: "2.0",
+      method: method,
+      params: params,
+      id: 1
+    };
+    if (auth) {
+      body.auth = auth;   // add only when we have a token
+    }
+
+    const response = await fetch(ZABBIX_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    return response.json();
+  }
+
+  // ---------------- Load Zabbix Data ----------------
+  async function loadZabbixData() {
+    try {
+      console.log("Logging into Zabbix…");
+      const login = await zabbixApi("user.login", {
+        username: ZABBIX_USER,
+        password: ZABBIX_PASS
+      });
+
+      if (!login.result) {
+        console.error("Login failed:", login);
+        alert("Zabbix login failed! Check credentials.");
+        return;
+      }
+
+      const token = login.result;
+      console.log("Auth token:", token);
+
+      const hostResp = await zabbixApi(
+        "host.get",
+        { output: ["hostid", "host", "available"], limit: 2 },
+        token
+      );
+
+      if (hostResp.result?.length) {
+        const [h1, h2] = hostResp.result;
+        document.getElementById("best-availability").textContent =
+          `Host: ${h1.host} - ${h1.available === "1" ? "🟢 Online" : "🔴 Offline"}`;
+        if (h2) {
+          document.getElementById("worst-availability").textContent =
+            `Host: ${h2.host} - ${h2.available === "1" ? "🟢 Online" : "🔴 Offline"}`;
+        }
+      } else {
+        document.getElementById("best-availability").textContent =
+          "⚠️ No hosts found in Zabbix";
+      }
+    } catch (err) {
+      console.error("Zabbix API error:", err);
+      alert("Error fetching data from Zabbix (check console).");
+    }
+  }
+</script>
+
+
+</body>
+</html>
